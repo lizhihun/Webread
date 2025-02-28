@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>销售员客户管理表</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .actions {
+            text-align: center;
+            min-width: 80px;
+        }
+        input[type="text"], input[type="email"], input[type="date"] {
+            width: 100%;
+            padding: 6px;
+            margin: 4px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>客户名称</th>
+            <th>联系人</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>公司</th>
+            <th>行业</th>
+            <th>地区</th>
+            <th>跟进状态</th>
+            <th>最后跟进时间</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 示例数据行 -->
+        <tr>
+            <td>1</td>
+            <td>ABC科技有限公司</td>
+            <td>张经理</td>
+            <td>138-1234-5678</td>
+            <td>contact@abc.com</td>
+            <td>北京</td>
+            <td>IT服务</td>
+            <td>华东</td>
+            <td><span style="color:green">已签约</span></td>
+            <td>2023-10-15</td>
+            <td>需定期回访</td>
+            <td>
+                <button onclick="editRow(this)">编辑</button>
+                <button onclick="deleteRow(this)">删除</button>
+            </td>
+        </tr>
+        <!-- 更多数据行... -->
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="12">
+                <button onclick="addNewRow()">新增客户</button>
+                <input type="text" id="searchInput" placeholder="搜索...">
+                <button onclick="searchTable()">搜索</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+// 示例JavaScript功能
+function addNewRow() {
+    const table = document.querySelector('table');
+    const newRow = table.insertRow(-1);
+    
+    // 添加表格单元格
+    ['序号', '客户名称', '联系人', '电话', '邮箱', '公司', '行业', '地区', '跟进状态', '最后跟进时间', '备注', '操作'].forEach(text => {
+        const cell = newRow.insertCell();
+        cell.textContent = text;
+    });
+    
+    // 添加操作按钮
+    const actionsCell = newRow.insertCell(11);
+    actionsCell.innerHTML = `
+        <button onclick="editRow(this)">编辑</button>
+        <button onclick="deleteRow(this)">删除</button>
+    `;
+}
+
+function editRow(button) {
+    alert('编辑功能需自行实现！');
+}
+
+function deleteRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+}
+
+function searchTable() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const table = document.querySelector('table');
+    const rows = table.getElementsByTagName('tr');
+    
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.getElementsByTagName('td');
+        let match = false;
+        
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].textContent.toLowerCase().indexOf(input) > -1) {
+                match = true;
+                break;
+            }
+        }
+        
+        row.style.display = match ? '' : 'none';
+    }
+}
+</script>
+
+</body>
+</html>
